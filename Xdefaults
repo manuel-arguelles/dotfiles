@@ -1,0 +1,46 @@
+URxvt.buffered:         true
+URxvt.background:       black
+URxvt.foreground:       gray
+URxvt.cursorColor:      white
+URxvt.underlineColor:   white
+URxvt.font:             xft:Terminus:pixelsize=14:antialias=true
+URxvt.boldFont:         xft:Terminus:bold:pixelsize=14:antialias=true
+URxvt*termName:         xterm
+
+!------------
+!True Transparency
+!------------
+!set to 32-bit for real transparency (compositing required (see xcompmgr)
+!urxvt.depth:             32
+!!transparent=0000 opaque=ffff
+!urxvt.background: rgba:1111/1111/1111/dddd
+!!urxvt*background: rgba:1111/1111/1111/0000
+
+!------------------
+!False tranparency
+!------------------
+URxvt.transparent: true
+URxvt.shading: 20 
+
+Urxvt.secondaryScroll:  true    # Enable Shift-PageUp/Down in screen
+
+URxvt.perl-ext-common:  default,matcher
+URxvt.urlLauncher:      /usr/bin/chrome
+URxvt.matcher.button:   1
+
+urxvt.scrollBar:false
+!urxvt.scrollBar_right:true
+!urxvt.transpscrollbar:true
+urxvt.saveLines:1024
+
+urxvt.urgentOnBell:true
+urxvt.visualBell:false
+urxvt.utmpInhibit:true
+urxvt.loginShell:false
+urxvt.cursorBlink:true
+urxvt.urgentOnBell:true
+
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
+
+urxvt.print-pipe: "cat > /dev/null"

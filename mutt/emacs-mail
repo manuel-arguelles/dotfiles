@@ -1,0 +1,28 @@
+;; UTF-8
+(prefer-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+(defun mutt-mail-mode-hook ()
+  (not-modified)
+  (mail-text)
+  (setq make-backup-files nil))
+(or (assoc "mutt-" auto-mode-alist)
+    ( setq auto-mode-alist (cons '(".mutt/mutt-*" . mail-mode) auto-mode-alist)))
+(setq-default fill-column 80)
+(add-hook 'mail-mode-hook 'mutt-mail-mode-hook)
+;; (add-hook 'mail-mode-hook 'refill-mode)
+(global-set-key (kbd "C-c q") 'refill-mode)
+
+;; Spellcheck
+(ispell-change-dictionary "en")
+(add-hook 'mail-mode-hook (lambda () (flyspell-mode 1)))
+(defun fd-switch-dictionary()
+(interactive)
+(let* ((dic ispell-current-dictionary)
+   (change (if (string= dic "es") "en" "es")))
+  (ispell-change-dictionary change)
+  (message "Dictionary switched from %s to %s" dic change)
+  ))
+(global-set-key (kbd "<f8>") 'fd-switch-dictionary)
+

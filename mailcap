@@ -1,0 +1,7 @@
+text/html;	lynx -dump -display_charset=utf-8 -force_html %s; copiousoutput
+image/*;	display %s
+video/*;	mplayer %s
+audio/*;	mplayer %s
+application/pdf; okular %s
+application/msword; libreoffice %s
+text/calendar;      ~/bin/show_ics; copiousoutput
