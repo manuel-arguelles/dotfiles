@@ -25,7 +25,7 @@ URxvt.shading: 20
 Urxvt.secondaryScroll:  true    # Enable Shift-PageUp/Down in screen
 
 URxvt.perl-ext-common:  default,matcher
-URxvt.urlLauncher:      /usr/bin/chrome
+URxvt.url-launcher:     /usr/bin/firefox -new-tab
 URxvt.matcher.button:   1
 
 urxvt.scrollBar:false
