@@ -78,6 +78,9 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindcode $mod+d focus child
 
+# focus urgent client
+bindsym $mod+u [urgent="newest"] focus
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -147,7 +150,6 @@ new_window 1pixel
 
 # Floating for some apps
 for_window [class="Guitarix"] floating enable
-#for_window [class="Display"] floating enable
 
 # Scratchpad (move and show)
 bindsym $mod+Shift+minus move scratchpad
