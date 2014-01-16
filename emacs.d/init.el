@@ -30,11 +30,13 @@
     (message "Dictionary switched from %s to %s" dic change)))
 (global-set-key (kbd "<f8>") 'fd-switch-dictionary)
 
-
-(load-theme 'assemblage t)
+;; Color theme
+(when (display-graphic-p)
+  (load-theme 'assemblage t))
 
 ;; Font
-(set-face-attribute 'default nil :font "Terminus-12")
+;; Should already be set on X resources/defaults
+;;(set-face-attribute 'default nil :font "Terminus-12")
 
 ;; Desktop mode
 (desktop-save-mode 0)
