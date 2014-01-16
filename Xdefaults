@@ -1,11 +1,27 @@
-URxvt.buffered:         true
-URxvt.background:       black
-URxvt.foreground:       gray
-URxvt.cursorColor:      white
-URxvt.underlineColor:   white
-URxvt.font:             xft:Terminus:pixelsize=14:antialias=true
-URxvt.boldFont:         xft:Terminus:bold:pixelsize=14:antialias=true
-URxvt*termName:         xterm
+!------------------
+!General
+!------------------
+URxvt.buffered:     true
+URxvt.urgentOnBell: true
+URxvt.visualBell:   false
+URxvt.utmpInhibit:  true
+URxvt.loginShell:   true
+URxvt.print-pipe:   "cat > /dev/null"
+
+!------------------
+!Colors
+!------------------
+URxvt.background:     black
+URxvt.foreground:     gray
+URxvt.cursorColor:    white
+URxvt.underlineColor: white
+URxvt.cursorBlink:    true
+
+!------------------
+!Fonts
+!------------------
+URxvt.font:     xft:Terminus:pixelsize=14:antialias=true
+URxvt.boldFont: xft:Terminus:bold:pixelsize=14:antialias=true
 
 !------------
 !True Transparency
@@ -20,30 +36,25 @@ URxvt*termName:         xterm
 !False tranparency
 !------------------
 URxvt.transparent: true
-URxvt.shading: 20 
+URxvt.shading:     20
 
-Urxvt.secondaryScroll:  true    # Enable Shift-PageUp/Down in screen
+!------------------
+!Scrolling
+!------------------
+Urxvt.secondaryScroll: true
+URxvt.scrollBar:       false
+URxvt.saveLines:       1024
+URxvt.keysym.Home:     \033[1~
+URxvt.keysym.End:      \033[4~
 
-URxvt.perl-ext-common:  default,matcher
-URxvt.url-launcher:     /usr/bin/firefox -new-tab
-URxvt.matcher.button:   1
+!------------------
+!URL handling
+!------------------
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher:    /usr/bin/firefox
+URxvt.matcher.button:  1
 
-urxvt.scrollBar:false
-!urxvt.scrollBar_right:true
-!urxvt.transpscrollbar:true
-urxvt.saveLines:1024
-
-urxvt.urgentOnBell:true
-urxvt.visualBell:false
-urxvt.utmpInhibit:true
-urxvt.loginShell:false
-urxvt.cursorBlink:true
-urxvt.urgentOnBell:true
-
-URxvt*keysym.Home: \033[1~
-URxvt*keysym.End: \033[4~
-
-urxvt.print-pipe: "cat > /dev/null"
-
+!------------------
+!Emacs
+!------------------
 Emacs.font: Terminus-12
-
