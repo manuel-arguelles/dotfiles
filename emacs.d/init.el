@@ -17,7 +17,7 @@
          (apply 'ensure-installed (cdr packages)))))
 
  ;; packages I use
-(ensure-installed 'assemblage-theme
+(ensure-installed 'zenburn-theme
 		  'flyspell
 		  'php-mode)
 
@@ -32,7 +32,7 @@
 
 ;; Color theme
 (when (display-graphic-p)
-  (load-theme 'assemblage t))
+  (load-theme 'zenburn t))
 
 ;; Font
 ;; Should already be set on X resources/defaults
