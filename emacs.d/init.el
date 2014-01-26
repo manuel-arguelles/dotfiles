@@ -19,7 +19,8 @@
  ;; packages I use
 (ensure-installed 'zenburn-theme
 		  'flyspell
-		  'php-mode)
+		  'php-mode
+		  'git-commit)
 
 ;; Spell check dictionary
 (defun fd-switch-dictionary()
@@ -54,12 +55,14 @@
 ;; Dont show the GNU splash screen
 (setq inhibit-startup-message t)
 
+;; Show trailing white spaces
+(setq-default show-trailing-whitespace t)
+
 ;; Mode defs
 (add-to-list 'auto-mode-alist '("\\.php" . php-mode))
-
+(add-to-list 'auto-mode-alist '("mutt-.*" . mail-mode))
 
 ;; Hooks
-
 (add-hook 'flyspell-mode
 	  (lambda()
 	    (setq flyspell-issue-welcome-flag nil)
@@ -70,16 +73,17 @@
 (add-hook 'c-mode-common-hook
 	  (lambda()
 	    (c-set-style "k&r")
-	    (setq tab-width 4
-		  ident-tabs-mode nil)
-	    (setq c-basic-offset 4)
+	    (setq tab-width 8
+		  indent-tabs-mode t)
+	    (setq c-basic-offset 8)
 	    (flyspell-prog-mode)
 	    (show-paren-mode t)
 	    )
 	  )
-				       
+
 (add-hook 'text-mode-hook
 	  (lambda()
 	    (flyspell-mode 1)
+	    (auto-fill-mode 1)
 	    )
 	  )
