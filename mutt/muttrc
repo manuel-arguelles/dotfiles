@@ -44,9 +44,9 @@ set beep = no
 set pipe_decode = yes
 set print_command="muttprint"
 
-#set query_command = "abook --mutt-query '%s'"
-#macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
-#macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+set query_command = "abook --mutt-query '%s'"
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
 
 #set query_command = "goobook query '%s'"
 #bind editor <Tab> complete-query
