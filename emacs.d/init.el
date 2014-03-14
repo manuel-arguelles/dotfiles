@@ -19,8 +19,9 @@
  ;; packages I use
 (ensure-installed 'zenburn-theme
 		  'flyspell
+		  'smart-tabs-mode
 		  'php-mode
-		  'git-commit)
+		  'git-commit-mode)
 
 ;; Spell check dictionary
 (defun fd-switch-dictionary()
@@ -74,10 +75,12 @@
 	  (lambda()
 	    (c-set-style "k&r")
 	    (setq tab-width 8
-		  indent-tabs-mode t)
-	    (setq c-basic-offset 8)
+		  indent-tabs-mode t
+		  c-basic-offset 8
+		  fill-column 80)
 	    (flyspell-prog-mode)
 	    (show-paren-mode t)
+	    (smart-tabs-insinuate 'c)
 	    )
 	  )
 
