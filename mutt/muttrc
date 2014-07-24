@@ -19,15 +19,15 @@ set my_m_user3 = "user3@gmail.com"
 #------------------------------------
 # Basic variabes
 #------------------------------------
+set mailcap_path=~/.mutt/mailcap
 set header_cache=~/.mutt/cache/headers
 set message_cachedir=~/.mutt/cache/bodies
 set certificate_file=~/.mutt/certificates
 set sort_aux = 'reverse-last-date-received'
 set mime_forward=yes
 set mime_forward_rest=yes
-alternative_order text/plain text/html *
 auto_view text/html
-auto_view text/calendar
+alternative_order text/plain text/enriched text/html
 set timeout = 60
 set mail_check = 5
 set imap_keepalive = 600
