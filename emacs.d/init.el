@@ -80,7 +80,6 @@
 		  fill-column 80)
 	    (flyspell-prog-mode)
 	    (show-paren-mode t)
-	    (smart-tabs-insinuate 'c)
 	    )
 	  )
 
