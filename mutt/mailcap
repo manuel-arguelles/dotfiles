@@ -1,6 +1,7 @@
-text/html;	lynx -dump -display_charset=utf-8 -force_html %s; copiousoutput
-image/*;	display %s
-video/*;	mplayer %s
-audio/*;	mplayer %s
+text/html; firefox %s &; test=test -n "$DISPLAY"; needsterminal
+text/html; w3m -I %{charset} -O utf-8 -T text/html; copiousoutput;
+image/*; display %s
+video/*; mplayer %s
+audio/*; mplayer %s
 application/pdf; xpdf %s
 application/msword; libreoffice %s
