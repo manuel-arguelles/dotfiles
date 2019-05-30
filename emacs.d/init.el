@@ -18,14 +18,18 @@
 
  ;; packages I use
 (ensure-installed 'zenburn-theme
-		  'flyspell
-		  'php-mode
-		  'git-commit
-		  'markdown-mode
-		  'tempo
-		  'irony
-		  'company-irony
-		  'xcscope)
+                  'flyspell
+                  'php-mode
+                  'git-commit
+                  'markdown-mode
+                  'tempo
+                  'irony
+                  'company-irony
+                  'xcscope
+                  'magit
+                  'plantuml-mode
+                  'tide
+                  'find-file-in-project)
 
 ;; Spell check dictionary
 (defun fd-switch-dictionary()
@@ -35,6 +39,9 @@
     (ispell-change-dictionary change)
     (message "Dictionary switched from %s to %s" dic change)))
 (global-set-key (kbd "<f8>") 'fd-switch-dictionary)
+
+;; General key bindings
+(global-set-key "\C-xf" 'find-file-in-project)
 
 ;; Color theme
 (when (display-graphic-p)
@@ -68,6 +75,12 @@
 ;; Confirm exit
 (setq confirm-kill-emacs 'y-or-n-p)
 
+;; Scroll compilation buffer
+(setq compilation-scroll-output t)
+
+;; Disable tabs
+(setq-default indent-tabs-mode nil)
+
 ;; Mode defs
 (add-to-list 'auto-mode-alist '("\\.php" . php-mode))
 (add-to-list 'auto-mode-alist '("mutt-.*" . mail-mode))
@@ -77,75 +90,102 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 (add-hook 'flyspell-mode
-	  (lambda()
-	    (setq flyspell-issue-welcome-flag nil)
-	    (setq flyspell-issue-message-flag nil)
-	    )
-	  )
+          (lambda()
+            (setq flyspell-issue-welcome-flag nil)
+            (setq flyspell-issue-message-flag nil)
+            )
+          )
 
 (add-hook 'c-mode-common-hook
-	  (lambda()
-	    (c-set-style "k&r")
-	    (setq tab-width 8
-		  indent-tabs-mode nil
-		  c-basic-offset 2
-		  fill-column 80)
-	    (flyspell-prog-mode)
-	    (show-paren-mode t)
-	    (irony-mode t)
-	    )
-	  )
+          (lambda()
+            (c-set-style "k&r")
+            (setq tab-width 8
+                  indent-tabs-mode nil
+                  c-basic-offset 2
+                  fill-column 80)
+            (flyspell-prog-mode)
+            (show-paren-mode t)
+            (irony-mode t)
+            )
+          )
 
 (defun my-c-lineup-inclass (langelem)
   (let ((inclass (assoc 'inclass c-syntactic-context)))
     (save-excursion
       (goto-char (c-langelem-pos inclass))
       (if (or (looking-at "struct")
-	      (looking-at "typedef struct"))
-	  '+
-	'++))))
+              (looking-at "typedef struct"))
+          '+
+        '++))))
 
 (add-hook 'c++-mode-hook
-	  (lambda()
-	    (c-set-style "stroustrup")
-	    (setq indent-tabs-mode nil
-		  c-basic-offset 4
-		  fill-column 116)
-	    (c-set-offset 'access-label '-)
-;;	    (c-set-offset 'innamespace 0)
-	    (c-set-offset 'inclass 'my-c-lineup-inclass)
-	    (c-set-offset 'case-label '+)
-	    )
-	  )
+          (lambda()
+            (c-set-style "stroustrup")
+            (setq indent-tabs-mode nil
+                  c-basic-offset 2
+                  fill-column 116)
+            (c-set-offset 'access-label '-)
+            (c-set-offset 'innamespace 0)
+            (c-set-offset 'inclass 'my-c-lineup-inclass)
+            (c-set-offset 'case-label '+)
+            (c-set-offset 'member-init-intro '-)
+            )
+          )
 
 (add-hook 'sh-mode-hook
-	  (lambda()
-	    (setq indent-tabs-mode nil)
-	    )
-	  )
+          (lambda()
+            (setq indent-tabs-mode nil
+                  sh-basic-offset 2)
+            )
+          )
 
 (add-hook 'text-mode-hook
-	  (lambda()
-	    (setq fill-column 80)
-	    (flyspell-mode 1)
-	    (auto-fill-mode 1)
-	    )
-	  )
+          (lambda()
+            (setq fill-column 80)
+            (flyspell-mode 1)
+            (auto-fill-mode 1)
+            )
+          )
 
 (add-hook 'mail-mode-hook
-	  (lambda ()
-	    (setq fill-column 76
-		  confirm-kill-emacs nil)
-	    (flyspeel-mode 1)
-	    (auto-fill-mode 1)
-	    )
-	  )
+          (lambda ()
+            (setq fill-column 76
+                  confirm-kill-emacs nil)
+            (flyspeel-mode 1)
+            (auto-fill-mode 1)
+            )
+          )
 
 (add-hook 'markdown-mode-hook
-	  (lambda ()
-	    (setq fill-column 116)
-	    )
-	  )
+          (lambda ()
+            (setq fill-column 116)
+            )
+          )
+
+(add-hook 'js-mode-hook
+          (lambda ()
+            (setq js-indent-level 2)
+            )
+          )
+
+;; Tyescript
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq typescript-indent-level 2)
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (global-git-commit-mode t)
 
@@ -177,5 +217,18 @@
 (global-set-key (kbd "M-<tab>") 'company-complete)
 (put 'upcase-region 'disabled nil)
 
+;; Disable company mode in gud
+(add-hook 'gdb-mode-hook (lambda() (company-mode 0)))
+(add-hook 'gud-mode-hook (lambda() (company-mode 0)))
+
 (cscope-setup)
 (put 'downcase-region 'disabled nil)
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(add-hook 'git-commit-mode-hook '(lambda ()
+                                   (setq fill-column 72
+                                         git-commit-summary-max-length 50)
+                                   )
+          )
