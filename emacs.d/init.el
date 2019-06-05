@@ -42,6 +42,7 @@
 
 ;; General key bindings
 (global-set-key "\C-xf" 'find-file-in-project)
+(global-set-key "\C-co" 'ff-find-other-file)
 
 ;; Color theme
 (when (display-graphic-p)
@@ -51,6 +52,7 @@
 ;; Should already be set on X resources/defaults
 ;;(set-face-attribute 'default nil :font "Terminus-12")
 (set-default-font "Terminus-12")
+(add-to-list 'default-frame-alist '(font . "Terminus-12"))
 
 ;; Desktop mode
 (desktop-save-mode 0)
@@ -109,7 +111,7 @@
             )
           )
 
-(defun my-c-lineup-inclass (langelem)
+(defun cpp-lineup-inclass(langelem)
   (let ((inclass (assoc 'inclass c-syntactic-context)))
     (save-excursion
       (goto-char (c-langelem-pos inclass))
@@ -118,15 +120,36 @@
           '+
         '++))))
 
+(defvar cpp-other-file-alist
+  '(("\\.cpp\\'" (".h"))
+    ("\\.h\\'" (".cpp"))
+    ))
+
+(defun get-all-subdirectories(dir-list)
+  "Returns a list of all recursive subdirectories of dir-list,
+   ignoring directories with names that start with . (dot)"
+  (split-string
+   (shell-command-to-string
+    (concat "find "
+            (mapconcat 'identity dir-list " ")
+            " -type d -not -regex \".*/\\\..*\""))))
+
+(defun get-project-directory()
+  (split-string
+   (shell-command-to-string "git rev-parse --show-toplevel")))
+
+
 (add-hook 'c++-mode-hook
           (lambda()
             (c-set-style "stroustrup")
             (setq indent-tabs-mode nil
                   c-basic-offset 2
-                  fill-column 116)
+                  fill-column 116
+                  ff-other-file-alist 'cpp-other-file-alist
+                  ff-search-directories (get-all-subdirectories (get-project-directory)))
             (c-set-offset 'access-label '-)
             (c-set-offset 'innamespace 0)
-            (c-set-offset 'inclass 'my-c-lineup-inclass)
+            (c-set-offset 'inclass 'cpp-lineup-inclass)
             (c-set-offset 'case-label '+)
             (c-set-offset 'member-init-intro '-)
             )
