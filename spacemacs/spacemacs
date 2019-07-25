@@ -43,11 +43,13 @@ This function should only modify configuration layer settings."
      ;; better-defaults
      emacs-lisp
      git
-     ;;helm
+     ;; helm
      ivy
      ;; markdown
      multiple-cursors
-     org
+     (org :variables
+          org-want-todo-bindings t)
+
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -63,8 +65,8 @@ This function should only modify configuration layer settings."
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-backend 'rtags)
-            ;;c-c++-enable-rtags-completion nil)
-            ;;c-c++-enable-clang-support t)
+     debug
+     themes-megapack
      )
 
    ;; List of additional packages that will be installed without being
@@ -202,7 +204,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(zenburn
+                         spacemacs-dark
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -220,7 +223,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 10.0
                                :weight normal
                                :width normal)
 
@@ -481,13 +484,28 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  (add-to-list 'spacemacs-indent-sensitive-modes 'c++-mode)
+
   (setq compilation-scroll-output t)
+  (add-hook 'text-mode-hook '(lambda ()
+                               (turn-off-auto-fill)
+                               (visual-line-mode)
+                               (visual-fill-column-mode)
+                               (evil-define-minor-mode-key 'motion 'visual-line-mode "j" 'evil-next-visual-line)
+                               (evil-define-minor-mode-key 'motion 'visual-line-mode "k" 'evil-previous-visual-line)))
+
+  ;; lsp stuff
+  (with-eval-after-load 'lsp
+    (setq lsp-enable-indentation nil))
+
+  ;; git
   (global-git-commit-mode t)
   (add-hook 'git-commit-mode-hook '(lambda ()
                                      (setq fill-column 72
                                            git-commit-summary-max-length 50)))
 
   ;; Dairy
+  (calendar-set-date-style 'european)
   (appt-activate)
   (setq diary-file "~/Documents/org/diary"
         org-agenda-include-diary t
@@ -502,6 +520,7 @@ before packages are loaded."
   ;; mu4e
   (with-eval-after-load 'mu4e
     (setq mu4e-sent-messages-behavior 'delete)
+    (setq mu4e-view-show-addresses t)
     (setq mu4e-change-filenames-when-moving t)
     (setq mu4e-maildir (expand-file-name "~/.mail"))
     (setq mu4e-contexts
@@ -578,13 +597,38 @@ before packages are loaded."
     (setq mu4e-get-mail-command "~/bin/sync_mail.sh"
           mu4e-update-interval 900)
 
+    ;; set attachment directory
+    (setq mu4e-attachment-dir "~/Downloads")
+
     ;; Disable line breaks
     (add-hook 'mu4e-compose-mode-hook (lambda ()
-                                        (use-hard-newlines -1) 't))
+                                        (use-hard-newlines -1))
+                                        't)
 
     )
 
-  ;; org
+  ;; C++ style
+  (defun cpp-lineup-inclass(langelem)
+    (let ((inclass (assoc 'inclass c-syntactic-context)))
+      (save-excursion
+        (goto-char (c-langelem-pos inclass))
+        (if (or (looking-at "struct")
+                (looking-at "typedef struct"))
+            '+
+          '++))))
+
+  (add-hook 'c++-mode-hook (lambda()
+                             (c-set-style "stroustrup")
+                             (setq indent-tabs-mode nil
+                                   c-basic-offset 2
+                                   fill-column 116)
+                             (c-set-offset 'access-label '-)
+                             (c-set-offset 'innamespace 0)
+                             (c-set-offset 'inclass 'cpp-lineup-inclass)
+                             (c-set-offset 'case-label '+)
+                             (c-set-offset 'member-init-intro '-)))
+
+  ;; org mode
   (with-eval-after-load 'org
     (setq org-agenda-files '("~/Documents/org"))
 
@@ -605,6 +649,7 @@ before packages are loaded."
     (setq org-priority-faces '((?A . (:foreground "#F0DFAF" :weight bold))
                                (?B . (:foreground "LightSteelBlue"))
                                (?C . (:foreground "OliveDrab"))))
+
     (setq org-capture-templates
           '(("t" "todo" entry (file+headline "~/Documents/org/todo.org" "Tasks")
              "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
@@ -633,27 +678,11 @@ before packages are loaded."
     (org-agenda-to-appt)
     )
 
-  ;; c++
-  (defun cpp-lineup-inclass(langelem)
-    (let ((inclass (assoc 'inclass c-syntactic-context)))
-      (save-excursion
-        (goto-char (c-langelem-pos inclass))
-        (if (or (looking-at "struct")
-                (looking-at "typedef struct"))
-            '+
-          '++))))
-
-  (add-hook 'c++-mode-hook (lambda()
-                             (c-set-style "stroustrup")
-                             (setq indent-tabs-mode nil
-                                   c-basic-offset 2
-                                   fill-column 116)
-                             (c-set-offset 'access-label '-)
-                             (c-set-offset 'innamespace 0)
-                             (c-set-offset 'inclass 'cpp-lineup-inclass)
-                             (c-set-offset 'case-label '+)
-                             (c-set-offset 'member-init-intro '-)))
-
+  ;; lsp layer
+  (with-eval-after-load 'lsp
+    (setq lsp-ui-doc-enable nil
+          lsp-ui-sideline-enable nil)
+    )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
