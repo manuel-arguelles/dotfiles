@@ -1,0 +1,168 @@
+IMAPAccount gmail
+Host imap.gmail.com
+AuthMechs LOGIN
+User user@gmail.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/passwords.gpg | grep -Po '(?<=^gmail:).*$'"
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/Inbox
+
+Channel sync-gmail-default
+Master :gmail-remote:
+Slave :gmail-local:
+# Select some mailboxes to sync
+Patterns "INBOX"
+MaxMessages 300
+Create Both
+SyncState *
+
+Channel sync-gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+MaxMessages 50
+Create Both
+SyncState *
+
+Channel sync-gmail-trash
+Master :gmail-remote:"[Gmail]/Trash"
+Slave :gmail-local:trash
+ExpireUnread yes
+MaxMessages 10
+Create Both
+SyncState *
+
+Channel sync-gmail-drafts
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:drafts
+MaxMessages 50
+Create Both
+SyncState *
+
+# Get all the channels together into a group.
+Group gmail
+Channel sync-gmail-default
+Channel sync-gmail-sent
+Channel sync-gmail-trash
+Channel sync-gmail-drafts
+
+IMAPAccount linuxlatino
+Host imap.gmail.com
+AuthMechs LOGIN
+User user2@linuxlatino.org
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/passwords.gpg | grep -Po '(?<=^linuxlatino:).*$'"
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+IMAPStore linuxlatino-remote
+Account linuxlatino
+
+MaildirStore linuxlatino-local
+Path ~/.mail/linuxlatino/
+Inbox ~/.mail/linuxlatino/Inbox
+
+Channel sync-linuxlatino-default
+Master :linuxlatino-remote:
+Slave :linuxlatino-local:
+Patterns "INBOX"
+MaxMessages 300
+Create Both
+SyncState *
+
+Channel sync-linuxlatino-trash
+Master :linuxlatino-remote:"[Gmail]/Papelera"
+Slave :linuxlatino-local:trash
+MaxMessages 10
+ExpireUnread yes
+Create Both
+SyncState *
+
+Channel sync-linuxlatino-drafts
+Master :linuxlatino-remote:"[Gmail]/Borradores"
+Slave :linuxlatino-local:drafts
+MaxMessages 50
+Create Both
+SyncState *
+
+# Get all the channels together into a group.
+Group linuxlatino
+Channel sync-linuxlatino-default
+Channel sync-linuxlatino-sent
+Channel sync-linuxlatino-trash
+Channel sync-linuxlatino-drafts
+
+IMAPAccount work
+Host imap.work.com
+AuthMechs LOGIN
+User user@work.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mutt/passwords.gpg | grep -Po '(?<=^work:).*$'"
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+IMAPStore work-remote
+Account work
+
+MaildirStore work-local
+Path ~/.mail/work/
+Inbox ~/.mail/work/Inbox
+
+Channel sync-work-default
+Master :work-remote:
+Slave :work-local:
+Patterns "INBOX"
+MaxMessages 500
+Create Both
+SyncState *
+
+Channel sync-work-sent
+Master :work-remote:"[Gmail]/Enviados"
+Slave :work-local:sent
+MaxMessages 50
+Create Both
+SyncState *
+
+Channel sync-work-trash
+Master :work-remote:"[Gmail]/Papelera"
+Slave :work-local:trash
+MaxMessages 10
+ExpireUnread yes
+Create Both
+SyncState *
+
+Channel sync-work-drafts
+Master :work-remote:"[Gmail]/Borradores"
+Slave :work-local:drafts
+MaxMessages 50
+Create Both
+SyncState *
+
+Channel sync-work-freezes
+Master :work-remote:Freezes
+Slave :work-local:freezes
+MaxMessages 300
+Create Both
+ExpireUnread yes
+SyncState *
+
+Channel sync-work-notifications
+Master :work-remote:Notifications
+Slave :work-local:notifications
+MaxMessages 300
+Create Both
+ExpireUnread yes
+SyncState *
+
+# Get all the channels together into a group.
+Group work
+Channel sync-work-default
+Channel sync-work-sent
+Channel sync-work-trash
+Channel sync-work-drafts
+Channel sync-work-freezes
+Channel sync-work-notifications
+

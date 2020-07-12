@@ -7,6 +7,7 @@ URxvt.visualBell:   false
 URxvt.utmpInhibit:  true
 URxvt.loginShell:   false
 URxvt.print-pipe:   "cat > /dev/null"
+URxvt.letterSpace:  1
 
 !------------------
 !Colors
