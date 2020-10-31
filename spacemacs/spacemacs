@@ -69,13 +69,16 @@ This function should only modify configuration layer settings."
      (lsp :variables
           lsp-ui-doc-enable nil
           lsp-ui-sideline-enable t
-          lsp-file-watch-threshold 20000)
+          lsp-file-watch-threshold 20000
+          lsp-clients-clangd-executable "/usr/bin/clangd"
+          lsp-clients-clangd-args '("--clang-tidy"))
      (c-c++ :variables
-            c-c++-backend 'lsp-ccls
+            c-c++-backend 'lsp-clangd
             c-c++-default-mode-for-headers 'c++-mode)
      debug
      themes-megapack
      shell
+     shell-scripts
      (vue :variables
           vue-backend 'lsp)
      (node :variables
@@ -531,6 +534,7 @@ before packages are loaded."
   (setq standard-indent 2)
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 2)
+  (setq sh-basic-offset 2)
   (add-to-list 'spacemacs-indent-sensitive-modes 'c++-mode)
 
   (setq compilation-scroll-output t)
@@ -573,6 +577,7 @@ before packages are loaded."
     (require 'org-contacts)
     (mu4e-icalendar-setup)
     (setq mu4e-icalendar-diary-file "~/Documents/org/diary")
+    (setq gnus-blocked-images "http")
     (setq mu4e-sent-messages-behavior 'delete)
     (setq mu4e-view-show-addresses t)
     (setq mu4e-change-filenames-when-moving t)
