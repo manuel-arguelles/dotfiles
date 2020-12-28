@@ -29,8 +29,11 @@ command=$SCRIPT_DIR/$BLOCK_NAME
 separator_block_width=15
 markup=none
 
-[multi_cpu_usage]
-interval=5
+[cpu-usage]
+LABEL=CPU 
+interval=persist
+format=json
+markup=pango
 
 # Temperature
 #
