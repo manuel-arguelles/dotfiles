@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+case "$BLOCK_BUTTON" in
+  1)
+      rofi-usb-mount.sh --mount
+      ;;
+  3)
+      rofi-usb-mount.sh --umount
+      ;;
+esac
+
+rofi-usb-mount.sh --check
