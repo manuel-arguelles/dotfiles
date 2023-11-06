@@ -1,0 +1,12 @@
+# General configuration 
+source ~/.config/neomutt/settings
+source ~/.config/neomutt/mappings
+
+# Folder hooks
+folder-hook 'gmail' 'source ~/.config/neomutt/gmail-account'
+folder-hook 'riseup' 'source ~/.config/neomutt/riseup-account'
+folder-hook 'disroot' 'source ~/.config/neomutt/disroot-account'
+
+# Default account
+source ~/.config/neomutt/gmail-account
+

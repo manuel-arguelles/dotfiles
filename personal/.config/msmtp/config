@@ -1,0 +1,25 @@
+defaults
+auth on
+tls on
+
+account gmail
+host smtp.gmail.com
+tls_starttls off
+from manuel.arguelles@gmail.com
+user manuel.arguelles@gmail.com
+passwordeval "gpg2 -q --for-your-eyes-only --no-tty -d ~/.config/neomutt/passwords.gpg | grep -Po '(?<=^gmail:).*$'"
+
+account riseup
+host mail.riseup.net
+tls_starttls off
+from pako@riseup.net
+user pako@riseup.net
+passwordeval "gpg2 -q --for-your-eyes-only --no-tty -d ~/.config/neomutt/passwords.gpg | grep -Po '(?<=^riseup:).*$'"
+
+account disroot
+host disroot.org
+tls_starttls off
+from manuel.arguelles@disroot.org
+user manuel.arguelles@disroot.org
+passwordeval "gpg2 -q --for-your-eyes-only --no-tty -d ~/.config/neomutt/passwords.gpg | grep -Po '(?<=^disroot:).*$'"
+

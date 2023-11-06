@@ -1,0 +1,30 @@
+# Account settings
+unmailboxes *
+set from = "manuel.arguelles@disroot.org"
+set realname = "Manuel Argüelles"
+
+set mbox_type = Maildir
+set folder = "~/.mail/disroot"
+
+set sendmail = "msmtp -a disroot"
+
+## Cache settings
+set header_cache = "~/.cache/mail/disroot/header_cache"
+set message_cachedir = "~/.cache/mail/disroot/message_cache"
+
+## Mailbox settings
+set spoolfile = +inbox
+set postponed = +drafts
+set record = +sent
+set trash = +trash
+set mbox = +archive
+
+mailboxes =inbox =drafts =sent =trash =archive
+
+## Navigation settings
+bind index,pager J noop
+macro index,pager Ji "<change-folder>=inbox<enter>" "go to inbox"
+macro index,pager Ja "<change-folder>=archive<enter>" "go to archive"
+macro index,pager Js "<change-folder>=sent<enter>" "go to sent"
+macro index,pager Jt "<change-folder>=trash<enter>" "go to trash"
+macro index,pager Jd "<change-folder>=drafts<enter>" "go to drafts"

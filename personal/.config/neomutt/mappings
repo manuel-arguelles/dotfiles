@@ -1,0 +1,19 @@
+# Basic navigation
+bind index g noop
+bind index gj next-unread
+bind index gk previous-unread
+bind index gg first-entry
+
+# Sidebar
+bind index,pager B sidebar-toggle-visible
+bind index,pager \Cj sidebar-next
+bind index,pager \Ck sidebar-prev
+bind index,pager \Co sidebar-open
+
+# Switch account
+bind index,pager a noop 
+macro index,pager a1 '<sync-mailbox><enter-command>source ~/.config/neomutt/riseup-account<enter><change-folder>!<enter>'
+macro index,pager a2 '<sync-mailbox><enter-command>source ~/.config/neomutt/disroot-account<enter><change-folder>!<enter>'
+
+# Synchronize mail
+macro index S "<shell-escape>mbsync -a<enter>" "sync email"

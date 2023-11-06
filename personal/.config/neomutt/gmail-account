@@ -1,0 +1,28 @@
+# Account settings
+unmailboxes *
+set from = "manuel.arguelles@gmail.com"
+set realname = "Manuel Argüelles"
+
+set mbox_type = Maildir
+set folder = "~/.mail/gmail"
+
+set sendmail = "msmtp -a gmail"
+
+## Cache settings
+set header_cache = "~/.cache/mail/gmail/header_cache"
+set message_cachedir = "~/.cache/mail/gmail/message_cache"
+
+## Mailbox settings
+set spoolfile = +inbox
+set postponed = +drafts
+set record = +sent
+set trash = +trash
+
+mailboxes =inbox =sent =drafts =trash
+
+## Navigation settings
+bind index,pager J noop
+macro index,pager Ji "<change-folder>=inbox<enter>" "go to inbox"
+macro index,pager Js "<change-folder>=sent<enter>" "go to sent"
+macro index,pager Jt "<change-folder>=trash<enter>" "go to trash"
+macro index,pager Jd "<change-folder>=drafts<enter>" "go to drafts"
