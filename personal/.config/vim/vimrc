@@ -1,0 +1,21 @@
+" Vim only
+set nocompatible
+
+" Color scheme
+syntax enable
+set background=dark
+colorscheme solarized
+
+" Encoding
+set encoding=utf-8
+
+" Line number
+set relativenumber
+
+" Indentation
+filetype plugin indent on
+
+" Plugins
+if filereadable(expand("~/.config/vim/plugins.vim"))
+    source ~/.config/vim/plugins.vim
+endif

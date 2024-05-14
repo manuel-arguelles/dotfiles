@@ -1,0 +1,7 @@
+import = [
+  "~/.config/alacritty/solarized_dark.toml"
+]
+
+[font]
+normal = { family = "NotoSansMono", style = "Regular" }
+size = 9
