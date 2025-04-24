@@ -1,0 +1,7 @@
+profile office {
+    output eDP-1 enable mode 1920x1080 position 840,1050
+    output DP-3 enable mode  1680x1050 position 1680,0
+    output DP-4 enable mode 1680x1050 position 0,0
+
+}
+
